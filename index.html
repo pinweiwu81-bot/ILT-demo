@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Tech & AI Showcase | Pin-Wei Wu</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E85D26;
+            --bg-base: #0B0E14;
+            --bg-panel: #151A23;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent: #38BDF8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: radial-gradient(circle at 50% 0%, rgba(232, 93, 38, 0.08), transparent 500px);
+        }
+
+        header {
+            padding: 2rem 4rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 14, 20, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+
+        .logo-area span {
+            color: var(--primary);
+        }
+
+        .logo-area p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .philosophy-banner {
+            background: linear-gradient(90deg, rgba(232, 93, 38, 0.1), rgba(56, 189, 248, 0.05));
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 4rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .phi-badge {
+            background: rgba(232, 93, 38, 0.2);
+            color: #FDBA74;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            border: 1px solid rgba(232, 93, 38, 0.4);
+        }
+
+        .phi-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #E2E8F0;
+        }
+
+        .phi-text b {
+            color: var(--primary);
+        }
+
+        .container {
+            flex: 1;
+            padding: 3rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: white;
+            background: rgba(232, 93, 38, 0.15);
+            box-shadow: inset 0 0 0 1px var(--primary);
+        }
+
+        .demo-section {
+            display: none;
+            animation: slideUp 0.4s ease forwards;
+        }
+
+        .demo-section.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .btn-run {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .btn-run:hover {
+            background: #d94e1e;
+            transform: scale(1.02);
+        }
+
+        /* Demo 1 Specifics */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .data-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-messy {
+            color: #FCA5A5;
+            background: rgba(252, 165, 165, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .status-clean {
+            color: #86EFAC;
+            background: rgba(134, 239, 172, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Demo 2 Specifics */
+        .sequence-step {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #333;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .sequence-step.email {
+            border-color: var(--primary);
+        }
+
+        .sequence-step.logic {
+            border-color: #FDBA74;
+            background: rgba(253, 186, 116, 0.05);
+        }
+
+        .sequence-step.breakup {
+            border-color: #86EFAC;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .step-desc {
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Demo 3 Specifics */
+        .tool-build-box {
+            background: #000;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .code-preview {
+            font-family: 'Fira Code', monospace;
+            color: #38BDF8;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>Pin-Wei <span>Wu</span></h1>
+            <p>Commercial Tech & AI Integration Showcase</p>
+        </div>
+        <div style="text-align: right;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Prepared for: <b>ILT
+                    Education</b></div>
+            <div
+                style="font-size: 0.8rem; color: #E2E8F0; display: flex; gap: 10px; align-items: center; justify-content: flex-end;">
+                <span><a href="mailto:pinweiwu81@gmail.com" style="color: white; text-decoration: none;">✉️
+                        pinweiwu81@gmail.com</a></span>
+                <span>|</span>
+                <span><a href="tel:+46793133294" style="color: white; text-decoration: none;">📱 +46 79 313 32
+                        94</a></span>
+                <span>|</span>
+                <span><a href="https://www.linkedin.com/in/pin-wei-wu/" target="_blank"
+                        style="color: white; text-decoration: none;">in/pinweiwu</a></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="philosophy-banner">
+        <div class="phi-badge">Upstream Feedback Loop</div>
+        <div class="phi-text">
+            <b>My Advantage:</b> I learned HubSpot logic from the Sales side. At Hyper Island, I was the gatekeeper for
+            SQLs from Marketing. If a lead wasn't ready, I manually pushed them back to MQLs for nurturing. <b>Because I
+                know exactly what makes a lead truly "Sales-Ready", I want to move upstream.</b> I want to design the
+            Marketing Automation engine itself, ensuring no lead is handed over until it's fully baked, closing the gap
+            between MKT and Sales.
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchDemo('demo1', this)">1. Data Hygiene (Quizrr)</button>
+            <button class="tab-btn" onclick="switchDemo('demo4', this)">2. The Feedback Loop (SQL to MQL)</button>
+            <button class="tab-btn" onclick="switchDemo('demo2', this)">3. Sales Sequences (Hyper Island)</button>
+            <button class="tab-btn" onclick="switchDemo('demo3', this)">4. Agentic AI Tools</button>
+        </div>
+
+        <!-- DEMO 1: Data Hygiene -->
+        <div id="demo1" class="demo-section active">
+            <div style="margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 8px;">Batch Data Standardization via AI Prompting</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    <b>Context (Quizrr):</b> The Co-founder handed me a messy Excel sheet with 1,500 leads across
+                    different industries and job titles. Manually categorizing them would take days.<br>
+                    <b>Solution:</b> I designed an AI prompt to process the 1,500 rows, standardizing chaotic job titles
+                    into strict CRM picklist values before importing them cleanly into Dynamics 365.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📉 Raw Excel (1,500 Rows)</div>
+                    </div>
+                    <table class="data-table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Input Job Title</th>
+                            <th>Industry (Raw)</th>
+                        </tr>
+                        <tr>
+                            <td>Anna K.</td>
+                            <td class="status-messy">VP of Sales & BD</td>
+                            <td class="status-messy">tech / software</td>
+                        </tr>
+                        <tr>
+                            <td>Johan S.</td>
+                            <td class="status-messy">Head of Mktg</td>
+                            <td class="status-messy">Ed-Tech</td>
+                        </tr>
+                        <tr>
+                            <td>Maria L.</td>
+                            <td class="status-messy">principal // school dir</td>
+                            <td class="status-messy">education (K-12)</td>
+                        </tr>
+                        <tr>
+                            <td>Erik B.</td>
+                            <td class="status-messy">Teacher (math)</td>
+                            <td class="status-messy">public school</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">✨ Standardized for Dynamics 365</div>
+                        <button class="btn-run" onclick="runDataClean()">Run AI Prompt ▶</button>
+                    </div>
+                    <table class="data-table" id="clean-table" style="opacity: 0.3;">
+                        <tr>
+                            <th>Name</th>
+                            <th>CRM Picklist: Persona</th>
+                            <th>CRM Picklist: Industry</th>
+                        </tr>
+                        <tr>
+                            <td>Anna K.</td>
+                            <td class="status-clean">Sales Leadership</td>
+                            <td class="status-clean">SaaS / Tech</td>
+                        </tr>
+                        <tr>
+                            <td>Johan S.</td>
+                            <td class="status-clean">Marketing Leadership</td>
+                            <td class="status-clean">EdTech</td>
+                        </tr>
+                        <tr>
+                            <td>Maria L.</td>
+                            <td class="status-clean">School Administration</td>
+                            <td class="status-clean">Education</td>
+                        </tr>
+                        <tr>
+                            <td>Erik B.</td>
+                            <td class="status-clean">Educator</td>
+                            <td class="status-clean">Education</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEMO 4: The Feedback Loop -->
+        <div id="demo4" class="demo-section">
+            <div style="margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 8px;">The Feedback Loop: Re-defining "Sales Ready"</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    <b>Context (Hyper Island):</b> Marketing ran broad Facebook/LinkedIn ads and passed single-click
+                    leads directly to us as SQLs. After calling them, we realized many had never even heard of the
+                    brand. They were completely unqualified.<br>
+                    <b>Solution:</b> Instead of letting bad leads ruin conversion data, I instituted a strict feedback
+                    loop. I manually downgraded their Lifecycle Stage back to MQL, tagged the specific "Disqualified
+                    Reason", and routed them back to Marketing for top-of-funnel nurturing.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🔄 The Downgrade Routing Logic</div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #E2E8F0; margin-bottom: 15px;">
+                        <i>How I aligned Sales and Marketing by fixing the data flow:</i>
+                    </div>
+
+                    <div class="sequence-step logic">
+                        <div class="step-title">1. Identify Poor SQL Quality</div>
+                        <div class="step-desc">Consolidated feedback from 3+ sales reps: <i>"These leads are too cold.
+                                High bounce rate on calls."</i></div>
+                    </div>
+                    <div class="sequence-step logic"
+                        style="border-color: #FCA5A5; background: rgba(252, 165, 165, 0.05);">
+                        <div class="step-title">2. HubSpot Property Update</div>
+                        <div class="step-desc">Changed <b>Lifecycle Stage</b> from <span
+                                style="color:var(--text-muted);text-decoration:line-through;">SQL</span> ➔ <b>MQL</b>.
+                        </div>
+                    </div>
+                    <div class="sequence-step logic"
+                        style="border-color: #86EFAC; background: rgba(134, 239, 172, 0.05);">
+                        <div class="step-title">3. Add 'Disqualified Reason' Tag</div>
+                        <div class="step-desc">Tagged with: <i>"Not Nurtured Enough"</i>. Passed back to Marketing to
+                            trigger the educational email sequence.</div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">💡 Why This Makes Me The Perfect Fit</div>
+                    </div>
+                    <div
+                        style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: #E2E8F0;">
+                            <b>I know the logic behind the scenes.</b><br><br>
+                            While I handled the routing and disqualification logic from the Sales side at Hyper Island,
+                            the underlying HubSpot infrastructure (Workflows, Properties, Triggers) is absolutely
+                            identical on the Marketing side.<br><br>
+                            Because I have lived on the receiving end of bad marketing leads, I know exactly what
+                            criteria makes a lead truly "Sales-Ready". Learning to click the buttons to configure the
+                            marketing-side sequence is easy for me; knowing the <b>business strategy</b> of when to
+                            trigger it is the hard part—and that is exactly what I bring to the table.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEMO 2: Sales Sequences -->
+        <div id="demo2" class="demo-section">
+            <div style="margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 8px;">Full-Funnel Automation (Pre & Post Sales)</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    <b>Context (Hyper Island):</b> I built automated sequences in HubSpot that spanned the entire
+                    customer journey. Pre-sales, the logic adapted based on lead behavior to drive urgency. Post-sales,
+                    the system automatically onboarded new clients, reducing manual work for the Customer Success team.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">⚙️ SQL Nurture Sequence Flow</div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #E2E8F0; margin-bottom: 15px;">
+                        <i>Example: Course starts in 14 days. Lead has shown interest but hasn't booked a meeting.</i>
+                    </div>
+
+                    <div class="sequence-step email">
+                        <div class="step-title">Day 1: Value Add <span
+                                style="color:var(--text-muted); font-size: 0.8rem;">Sent immediately</span></div>
+                        <div class="step-desc">Provide the course syllabus. Focus on the transformation they will
+                            achieve. Track open/click rates.</div>
+                    </div>
+                    <div class="sequence-step logic">
+                        <div class="step-title">IF/THEN Logic Branch</div>
+                        <div class="step-desc"><b>Condition:</b> Did they open the syllabus link? If Yes -> Schedule
+                            Sales Call task. If No -> Proceed to Day 4 email.</div>
+                    </div>
+                    <div class="sequence-step email">
+                        <div class="step-title">Day 7: Drive Urgency <span
+                                style="color:var(--text-muted); font-size: 0.8rem;">Trigger: No action</span></div>
+                        <div class="step-desc">"Only 7 days left until the cohort begins." - Shift tone to scarcity and
+                            high urgency.</div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">👋 The "Breakup Email" Strategy</div>
+                    </div>
+                    <div
+                        style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 6px; border: 1px solid var(--border);">
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Sent on Day 14 if
+                            unresponsive. This email consistently generated the highest reply rate from cold leads.</p>
+                        <div style="font-size: 0.95rem; line-height: 1.6; color: #E2E8F0;">
+                            <b>Subject:</b> Closing your file / Timing isn't right?<br><br>
+                            Hi [Name],<br><br>
+                            I haven't heard back from you regarding the upcoming course, so I’m going to assume the
+                            timing just isn't right for you right now, and I’ll close your file.<br><br>
+                            No worries at all! My door is always open. If upskilling your team becomes a priority again
+                            in the future, you have my contact info.<br><br>
+                            Best,<br>Pin-Wei
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CS Onboarding Row -->
+                <div class="panel" style="grid-column: 1 / -1;">
+                    <div class="panel-header" style="margin-bottom: 0.8rem; padding-bottom: 0.8rem;">
+                        <div class="panel-title">🤝 Post-Sales Customer Success (CS) Onboarding Flow</div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #E2E8F0; margin-bottom: 15px;">
+                        <i>Trigger: Deal is moved to "Closed Won". Automation counts down to the Course Start Date.</i>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="sequence-step email" style="flex: 1; border-color: #86EFAC; margin-bottom: 0;">
+                            <div class="step-title">Immediately <span
+                                    style="color:var(--text-muted); font-size: 0.75rem; font-weight: normal;">Upon
+                                    Close</span></div>
+                            <div class="step-desc" style="font-size: 0.85rem;">Send "Welcome Pack" with course logistics
+                                and my intro as CS. <i>(Content adapts dynamically if Online vs. In-Person)</i>.</div>
+                        </div>
+                        <div class="sequence-step email" style="flex: 1; border-color: #86EFAC; margin-bottom: 0;">
+                            <div class="step-title">T-minus 7 Days <span
+                                    style="color:var(--text-muted); font-size: 0.75rem; font-weight: normal;">Before
+                                    Course</span></div>
+                            <div class="step-desc" style="font-size: 0.85rem;">Send prep-materials, required reading,
+                                and technical setup guide.</div>
+                        </div>
+                        <div class="sequence-step email" style="flex: 1; border-color: #86EFAC; margin-bottom: 0;">
+                            <div class="step-title">T-minus 1 Day <span
+                                    style="color:var(--text-muted); font-size: 0.75rem; font-weight: normal;">Before
+                                    Course</span></div>
+                            <div class="step-desc" style="font-size: 0.85rem;">Final reminder, Google Meet link, and
+                                excitement-building email.</div>
+                        </div>
+                        <div class="sequence-step logic" style="flex: 1; border-color: #FDBA74; margin-bottom: 0;">
+                            <div class="step-title">Day 3 <span
+                                    style="color:var(--text-muted); font-size: 0.75rem; font-weight: normal;">Post-Course</span>
+                            </div>
+                            <div class="step-desc" style="font-size: 0.85rem;">Feedback form + 10% discount offer.
+                                Completion enters them into a free-class giveaway.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DEMO 3: Agentic AI -->
+        <div id="demo3" class="demo-section">
+            <div style="margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 8px;">Agentic AI for Operations Tooling</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">
+                    <b>Concept:</b> I go beyond basic ChatGPT prompts. I leverage <b>Agentic AI</b> to actively build
+                    operational tools and dashboards that bridge the gap between commercial strategy and technical
+                    execution.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🤖 My Approach to AI</div>
+                    </div>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: #E2E8F0; margin-bottom: 15px;">
+                        As an Operator, I don't write complex code from scratch. I direct Agentic AI to do it for me. I
+                        act as the Product Manager: defining the business logic, the desired output, and the user
+                        experience.
+                    </p>
+                    <ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; padding-left: 20px;">
+                        <li>Rapid prototyping of internal dashboards</li>
+                        <li>Generating complex Excel/Google Sheets macros for reporting</li>
+                        <li>Writing JSON payloads to connect systems when Zapier falls short</li>
+                    </ul>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">✨ This Very Dashboard</div>
+                    </div>
+                    <div class="tool-build-box">
+                        <p style="font-size: 0.9rem; color: #F1F5F9;">
+                            <b>Proof of Concept:</b> To prepare for this interview, I used an Agentic AI to build this
+                            interactive HTML presentation in minutes.
+                        </p>
+                        <div class="code-preview">
+                            // The AI handles the syntax.
+                            // I handle the strategy.
+                            function buildCommercialEngine() {
+                            alignTeams();
+                            standardizeData();
+                            automateSequences();
+                            return "Scalable Revenue";
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchDemo(demoId, btn) {
+            document.querySelectorAll('.demo-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(demoId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function runDataClean() {
+            const table = document.getElementById('clean-table');
+            table.style.transition = "opacity 0.8s";
+            table.style.opacity = "1";
+            let btn = event.currentTarget;
+            btn.innerHTML = "✅ Standardized";
+            btn.style.background = "#10B981";
+            setTimeout(() => {
+                btn.innerHTML = "Run AI Prompt ▶";
+                btn.style.background = "var(--primary)";
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
